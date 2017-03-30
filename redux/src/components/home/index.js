@@ -1,12 +1,35 @@
 import React from 'react'
-import {Link} from 'react-router'
+import {Link,hashHistory} from 'react-router'
 import {Col,Row} from 'antd'
+
+var User = React.createClass({
+    render(){
+        const {data} = this.props;
+        const {name,project} = data;
+        var nodes = project.map(function(val,i){
+            return  (
+                <li key={i} style={{float:'left'}} onClick={(e)=>hashHistory.push("repo/:"+val.id)}>
+                    <h5>{val.name}</h5>
+                    <p>{val.description}</p>
+                </li>
+            )
+        })
+        return (
+            <div>
+                <h4>{name}</h4>
+                <ul>
+                    {nodes}
+                </ul>
+            </div>
+        )
+    }
+})
 var Home = React.createClass({
     render(){
         const {info,users} = this.props;
         var nodes = users.map(function(obj,id){
             return (
-                <li key={id}><Link to={"users/"+obj.id}>{obj.name}</Link></li>
+                <User data = {obj}/>
             )
         })
         return (
@@ -18,7 +41,6 @@ var Home = React.createClass({
                         <Col span={4}><Link to='me'>{info.name}</Link></Col>
                     </Row>
                    <Row>
-                        <Col span={2}>其他人</Col>
                         <Col span={20}>
                             <ul>{nodes}</ul>
                         </Col>
