@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+</head>
+<body>
+<p>
+<div>
+    <p>
+        <label>用户名：</label>
+        <input value="lielie2" id="username">
+    </p>
+
+    <p>
+        <label>密码:</label>
+        <input value="lielie2" id="password">
+    </p>
+    <button id="login">登陆</button><br>
+    <button id="logout">登出</button><br>
+
+    <button id="user">所有用户</button>
+
+    <button id="create">create</button>
+    <button id="project">project</button>
+</div>
+<ul id="list"></ul>
+</p>
+</body>
+<script src="jquery.js"></script>
+
+<script>
+    var ip = 'http://101.200.129.112:9527'
+    $("#login").on('click',function () {
+        var username = $('#username').val()
+        var password = $("#password").val()
+
+        $.ajax({
+            url:ip+'/deploy/login/',
+            data:{
+                name:username,
+                password:password
+            },
+            success:function (res) {
+                console.log(res)
+            },
+            crossDomain: true,
+            contentType: "application/json",
+            xhrFields: {
+                withCredentials: true
+            }
+        })
+    })
+
+
+    $("#logout").on("click",function () {
+        $.ajax({
+            url:ip+'/deploy/logout/',
+            success:function (res) {
+                console.log(res)
+            },
+            crossDomain: true,
+            contentType: "application/json",
+            xhrFields: {
+                withCredentials: true
+            }
+        })
+    })
+
+    $("#user").on('click',function () {
+        $.ajax({
+            url:ip+'/deploy/user/',
+            success:function (res) {
+                console.log(res)
+                res.map(function (obj) {
+                    $("#list").append("<li>"+obj.name+"</li>")
+                })
+            },
+            crossDomain: true,
+            contentType: "application/json",
+            xhrFields: {
+                withCredentials: true
+            }
+        })
+    })
+
+    $("#create").on('click',function () {
+        $.ajax({
+            url:ip+'/deploy/create/',
+            data:{
+                url:'www.test.com',
+                name:'前端hello-lielei',
+            },
+            success:function (res) {
+                console.log(res)
+            },
+            crossDomain: true,
+            contentType: "application/json",
+            xhrFields: {
+                withCredentials: true
+            }
+        })
+
+    })
+
+    $("#project").on('click',function () {
+        $.ajax({
+            url:ip+'/deploy/myproject/',
+            success:function (res) {
+                console.log(res)
+            },
+            crossDomain: true,
+            contentType: "application/json",
+            xhrFields: {
+                withCredentials: true
+            }
+        })
+    })
+</script>
+
+</html>

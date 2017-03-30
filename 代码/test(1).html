@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>$Title$</title>
+</head>
+<body>
+<p>
+<div>
+    <p>
+        <label>用户名：</label>
+        <input value="lielie2" id="username">
+    </p>
+
+    <p>
+        <label>密码:</label>
+        <input value="lielie2" id="password">
+    </p>
+    <button id="login">登陆</button><br>
+    <button id="logout">登出</button><br>
+
+    <button id="user">所有用户</button>
+
+    <button id="create">create</button>
+    <button id="project">project</button>
+    <button id="repo">repo</button>
+    <button id="detail">detail</button>
+    <button id="init">init</button>
+</div>
+<ul id="list"></ul>
+</p>
+</body>
+<script src="jquery.js"></script>
+<script src="superagent.js"></script>
+<script>
+
+    var host = 'http://101.200.129.112:9527'
+    $("#login").on('click',function () {
+        var username = $('#username').val()
+        var password = $("#password").val()
+
+        $.ajax({
+            url:host+'/deploy/login/',
+            data:{
+                name:username,
+                password:password
+            },
+            success:function (res) {
+                console.log(res)
+            },
+            crossDomain: true,
+            contentType: "application/json",
+            xhrFields: {
+                withCredentials: true
+            }
+        })
+    })
+
+    $("#logout").on("click",function () {
+        $.ajax({
+            url:host+'/deploy/logout/',
+            success:function (res) {
+                console.log(res)
+            },
+            crossDomain: true,
+            contentType: "application/json",
+            xhrFields: {
+                withCredentials: true
+            }
+        })
+    })
+
+    $("#user").on('click',function () {
+        $.ajax({
+            url:host+'/deploy/user/',
+            success:function (res) {
+                console.log(res)
+                res.map(function (obj) {
+                    $("#list").append("<li>"+obj.name+"</li>")
+                })
+            },
+            crossDomain: true,
+            contentType: "application/json",
+            xhrFields: {
+                withCredentials: true
+            }
+        })
+
+    })
+
+    $("#create").on('click',function () {
+        $.ajax({
+            url:host+'/deploy/create/',
+            success:function (res) {
+                console.log(res)
+            },
+            crossDomain: true,
+            contentType: "application/json",
+            xhrFields: {
+                withCredentials: true
+            }
+        })
+
+    })
+
+    $("#project").on('click',function () {
+        $.ajax({
+            url:host+'/deploy/myproject/',
+            success:function (res) {
+                console.log(res)
+            },
+            crossDomain: true,
+            contentType: "application/json",
+            xhrFields: {
+                withCredentials: true
+            }
+        })
+    })
+
+    $("#repo").on("click",function () {
+        $.ajax({
+            url:host+'/deploy/clone/',
+            data:{
+                name:'zhangyue',
+                url:'https://github.com/letyougo/create.git'
+            },
+            success:function (res) {
+                console.log(res)
+            },
+            crossDomain: true,
+            contentType: "application/json",
+            xhrFields: {
+                withCredentials: true
+            }
+        })
+    })
+
+    $("#detail").on("click",function () {
+        $.ajax({
+            url:host+'/deploy/detail/',
+            data:{
+                name:'zhangyue',
+            },
+            success:function (res) {
+                console.log(res)
+            },
+            crossDomain: true,
+            contentType: "application/json",
+            xhrFields: {
+                withCredentials: true
+            }
+        })
+    })
+
+    $("#init").on("click",function () {
+        $.ajax({
+            url:host+'/deploy/init/',
+            success:function (res) {
+                console.log(res)
+            },
+            crossDomain: true,
+            contentType: "application/json",
+            xhrFields: {
+                withCredentials: true
+            }
+        })
+    })
+</script>
+</html>
